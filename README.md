@@ -10,7 +10,7 @@ phone: 207-315-2567 x316
 
 Meeting times: MWF 1:00-4:00 pm
 
-Virtual (zoom) office hours: TTh 10:00-12:00 AM
+[Virtual (zoom) office hours](https://www.google.com/url?q=https://bigelow.zoom.us/j/2073152562&sa=D&source=calendar&ust=1737386182564783&usg=AOvVaw0zzwTV8NGZ72tuSEWzX7Ko): TTh 10:00-12:00 AM
 
 Location: Miller 205
 
@@ -64,7 +64,6 @@ ____________________________________________________________________________
 
 **Wednesday Jan 15**
  - Lecture: Forecasting Methodologies
- - Discussion:
  - **R Tutorial: Covariates**
  - Reading assignment for Friday:
    - What is algorithmic bias - https://bdtechtalks.com/2018/03/26/racist-sexist-ai-deep-learning-algorithms/
@@ -114,6 +113,7 @@ ____________________________________________________________________________
 **Monday Jan 27**
  - **Project presentations**
    - We will have a mini scientific conference where you will present your project as you might do at a scientific conference. Plan your presentation to be 10 minutes. You may use a slide show (e.g.power point), but you are also welcome to use other styles. You should aim at communicating a condensed version of what is in your project write-up. Because the project write-up isn’t due for a few more days, it is acceptable to have open-ended questions or areas where you ask the audience for feedback. At the end of the presentations, we will have a discussion that attempts to bring this collection of projects together into an integrated description of what the Gulf of Maine might look like in future decades.
+   - Full description of assignment: https://github.com/BigelowLab/ColbyForecasting2025/blob/main/assignments/presentation.md
 
 ____________________________________________________________________________
 

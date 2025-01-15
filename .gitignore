@@ -62,3 +62,6 @@ functions/model_input.R
 functions/select_covariates.R
 # ben's development folder
 ben/*
+# the course file
+functions/course.R
+

@@ -56,6 +56,8 @@ for (f in list.files("functions", pattern = glob2rx("*.R"), full.names = TRUE)) 
 # The data directory has top level subdirectories ("buoys", "coast", "brickman")
 # that contain data used by all.  It also may have one or more yearly directories
 # for "personal data directories" ala "2024", "2025"
+
 ROOT_DATA_PATH = "C:/Users/tarag/Desktop/JanPlan/data"
+
 
 

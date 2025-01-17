@@ -23,10 +23,7 @@ covars = read_brickman(db)
 x = extract_brickman(covars, buoys, form = "wide")
 
 
-x = x |> 
-  mutate(SST =dT + Tbtm)
 
-# now make a plot of dT as a function of month
 ggplot(data = x,
        mapping = aes(x = month, y = SST)) +
   geom_point() + 
@@ -38,7 +35,7 @@ x = x |>
 
 # now plot!
 ggplot(data = x,
-       mapping = aes(x = month, y = dT)) +
+       mapping = aes(x = month, y = SST)) +
   geom_point() + 
   labs(y = "SST (C)", 
        title = "RCP4.5 2055 SST at buoy M01")

@@ -19,7 +19,7 @@ We also will need the Brickman mask and the observation data. Note that we are m
 
 ```{r load_obs_mask}
 coast = read_coastline()
-obs = read_observations(scientificname = "Thunnus thynnusr=") |>
+obs = read_observations(scientificname = "Mola mola") |>
   filter(month == "Aug")
 db = brickman_database() |>
   filter(scenario == "STATIC", var == "mask")
@@ -159,9 +159,9 @@ This function will have a name, `make_model_input_by_month`.  It's a long name, 
 #' @param min_obs num this sets a threshold below which we wont try to make a model. (Default is 3)
 #' @return a named two element list of greedy and conservative model inputs - they are tables
 make_model_input_by_month  = function(mon = "Jan",
-                                      obs = read_observations("Thunnus thynnus"),
+                                      obs = read_observations("Mola mola"),
                                       raster = NULL,
-                                      species = "Thunnus thynnus",
+                                      species = "Mola mola",
                                       path = data_path("model_input"),
                                       min_obs = 3){
   # the user *must* provide a raster
@@ -201,7 +201,7 @@ make_model_input_by_month  = function(mon = "Jan",
   
   # make the conservative model
   conservative_input = sample_background(thinned_obs, samp_weight,
-                                   n = 2 * nrow(thinned_obs),
+                                   n = 2 * nrow(obs),
                                    class_label = "background",
                                    method = "bias",
                                    return_pres = TRUE)
@@ -226,9 +226,9 @@ More phew!  But that is it!  Now we use a for loop to run through the months, ca
 ```{r for_loop}
 for (this_month in month.abb){
   result = make_model_input_by_month(this_month,
-                                     obs = read_observations(scientificname = "Thunnus thynnus"),
+                                     obs = read_observations(scientificname = "Mola mola"),
                                      raster = mask,
-                                     species = "Thunnus thynnus",
+                                     species = "Mola mola",
                                      path = data_path("model_input"),
                                      min_obs = 3)
 }
@@ -284,7 +284,7 @@ Use the menu option `File > New File > R Script` to create a blank file. Save th
 #' @param mon chr month abbreviation
 #' @param approach chr, one of "greedy" or "conservative"
 #' @param path chr the path to the data directory
-read_model_input = function(scientificname = "Thunnus Thynnus",
+read_model_input = function(scientificname = "Mola mola",
                             mon = "Jan",
                             approach = "greedy",
                             path = data_path("model_input")){

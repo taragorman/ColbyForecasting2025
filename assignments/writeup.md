@@ -20,3 +20,4 @@ Style
    - Lines of argumentation are clear and concise
    - Clear how methods address main question(s) / goal(s)
 
+Refer to the readings and lecture content to inform your write-up. One example of a paper that does a 2050 projection for the Gulf of Maine is Camille's paper on right whales. This goes much further than someone can do in a single month, but it's good context: https://online.ucpress.edu/elementa/article/9/1/00058/116780/Projecting-regions-of-North-Atlantic-right-whale

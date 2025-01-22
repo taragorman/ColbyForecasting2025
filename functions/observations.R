@@ -1,5 +1,5 @@
 
-read_observations = function(scientificname = "Mola mola",
+read_observations = function(scientificname = "Thunnus thynnus",
                              minimum_year = 1970, 
                              ...){
   

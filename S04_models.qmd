@@ -351,3 +351,13 @@ We have built a random forest model using tools from the [tidymodels universe](h
 
 Use the [iterations tutorial](https://bigelowlab.github.io/handytandy/iterations.html) to build a workflow for each month using one or both of your background selection methods.  Save each workflow in the `models` directory.  If you chose to do both background selection methods then you should end up with 24 workflows (12 months x 2 background sampling methods).
 
+```{r my_loop}
+ for(mon in month.abb){
+   for(approach in list("c", "g")){
+     data = sprintf("%s_%s", approach, mon)
+     print(data) 
+     write_workflow(fitted_wflow, data, data_path("models")) }
+   }
+
+```
+

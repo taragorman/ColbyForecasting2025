@@ -20,11 +20,11 @@ source("setup.R")
 Once again, we'll use the August data where we started with a greedy sampling approach. We are going to make a prediction about the present, which means it something akin to a [nowcast](https://en.wikipedia.org/wiki/Nowcasting_(economics)). 
 
 ```{r load_covar}
-cfg = read_configuration(version = "g_Aug")
+cfg = read_configuration(version = "g_Mar")
 db = brickman_database()
 covars = read_brickman(db |> filter(scenario == "PRESENT", interval == "mon")) |>
   select(all_of(cfg$keep_vars)) |>
-  slice("month", "Aug") 
+  slice("month", "Mar") 
 ```
 
 # Load the workflow
@@ -54,7 +54,7 @@ Now we can plot what is often called a "habitat suitability index" (hsi) map.
 
 ```{r plot_nowcast}
 coast = read_coastline()
-plot(nowcast['.pred_presence'], main = "Nowcast August", 
+plot(nowcast['.pred_presence'], main = "Nowcast March", 
      axes = TRUE, breaks = seq(0, 1, by = 0.1), reset = FALSE)
 plot(coast, col = "orange", lwd = 2, add = TRUE)
 ```
@@ -62,7 +62,7 @@ plot(coast, col = "orange", lwd = 2, add = TRUE)
 We can also plot a presence/background labeled map, but keep in mind it is just a thresholded version of the above where "presence" means `.pred_presence >= 0.5`.
 
 ```{r plot_class_labels}
-plot(nowcast['.pred'], main = "Nowcast August Labels", 
+plot(nowcast['.pred'], main = "Nowcast March Labels", 
      axes = TRUE, reset = FALSE)
 plot(coast, col = "black", lwd = 2, add = TRUE)
 ```
@@ -74,7 +74,7 @@ Now let's try our hand at forecasting - let's try RCP85 in 2075.  First we load 
 ```{r load_2075_RCP85}
 covars_rcp85_2075 = read_brickman(db |> filter(scenario == "RCP85", year == 2075, interval == "mon")) |>
   select(all_of(cfg$keep_vars)) |>
-  slice("month", "Aug") 
+  slice("month", "Jun") 
 ```
 
 ```{r forecast}
@@ -84,7 +84,7 @@ forecast_2075
 
 ```{r plot_forecast}
 coast = read_coastline()
-plot(forecast_2075['.pred_presence'], main = "RCP85 2075 August", 
+plot(forecast_2075['.pred_presence'], main = "RCP85 2075 June", 
      axes = TRUE, breaks = seq(0, 1, by = 0.1), reset = FALSE)
 plot(coast, col = "orange", lwd = 2, add = TRUE)
 ```
@@ -98,7 +98,7 @@ It would be nice to see a time series: current, 2055 and 2075 on the same graphi
 ```{r load_2055_RCP85}
 covars_rcp85_2055 = read_brickman(db |> filter(scenario == "RCP85", year == 2055, interval == "mon")) |>
   select(all_of(cfg$keep_vars)) |>
-  slice("month", "Aug") 
+  slice("month", "Jun") 
 forecast_2055 = predict_stars(wflow, covars_rcp85_2055)
 forecast_2055
 ```
@@ -145,12 +145,12 @@ path = data_path("predictions")
 if (!dir.exists(path)) ok = dir.create(path, recursive = TRUE)
 
 # write individual arrays?
-write_prediction(nowcast, file = file.path(path,"g_Aug_RCP85_2020.tif"))
-write_prediction(forecast_2055, file = file.path(path, "g_Aug_RCP85_2055.tif"))
-write_prediction(forecast_2075, file = file.path(path, "g_Aug_RCP85_2075.tif"))
+write_prediction(nowcast, file = file.path(path,"g_Jul_RCP85_2020.tif"))
+write_prediction(forecast_2055, file = file.path(path, "g_Jul_RCP85_2055.tif"))
+write_prediction(forecast_2075, file = file.path(path, "g_Jul_RCP85_2075.tif"))
 
 # or write them together in a "multi-layer" file?
-write_prediction(rcp85, file = file.path(path, "g_Aug_RCP85_all.tif"))
+write_prediction(rcp85, file = file.path(path, "g_Jul_RCP85_all.tif"))
 ```
 
 To read it back simply provide the filename to `read_prediction()`.  If you are reading back a multi-layer array, be sure to check out the `time` argument to assign values to the time dimension.  Single layer arrays don't have the concept of time so the `time` argument is ignored.
@@ -162,3 +162,76 @@ We made both a nowcast and a number predictions using a previously saved workflo
 # Coding Assignment
 
 For each each climate scenario create a monthly forecast (so that's three: nowcast, forecast_2055 and forecast_2075) and save each to in your `predictions` directory.  Whether you choose to draw upon the greedy background sampling method, the conservative background sampling method or both is up to you. Keep in mind that some months may not have enough data to model without throwing an error.  We suggest that you wrap your critical steps in a `try()` function which will catch the error without crashing your iterator. There is a tutorial on [error catching](https://bigelowlab.github.io/handytandy/try.html) that specifically uses `try()`.
+
+```{r my_loop}
+ for(mon in month.abb){
+   for(approach in list("c", "g")){
+     for(year in list("2020","2055","2075")){
+     data = sprintf("%s_%s_%s_%s", approach, mon,"RCP45",year)
+     print(data) 
+     predict_stars(fitted_wflow, data, data_path("predictions")) }
+   }
+ }
+
+```
+
+
+
+
+```{r rcp45}
+covars_rcp45_2075 = read_brickman(db |> filter(scenario == "RCP45", year == 2075, interval == "mon")) |>
+  select(all_of(cfg$keep_vars)) |>
+  slice("month", "Jun") 
+```
+```{r forecast}
+forecast_2075 = predict_stars(wflow, covars_rcp45_2075)
+forecast_2075
+```
+```{r plot_forecast}
+coast = read_coastline()
+plot(forecast_2075['.pred_presence'], main = "RCP45 2075 June", 
+     axes = TRUE, breaks = seq(0, 1, by = 0.1), reset = FALSE)
+plot(coast, col = "orange", lwd = 2, add = TRUE)
+```
+```{r load_2055_RCP45}
+covars_rcp45_2055 = read_brickman(db |> filter(scenario == "RCP45", year == 2055, interval == "mon")) |>
+  select(all_of(cfg$keep_vars)) |>
+  slice("month", "Jun") 
+forecast_2055 = predict_stars(wflow, covars_rcp45_2055)
+forecast_2055
+```
+```{r bind}
+rcp45 = c(nowcast, forecast_2055, forecast_2075, along = list(year = c("2020", "2055", "2075")))
+```
+```{r plot_hsi_series}
+plot_coast = function(){
+  plot(coast, col = "orange", lwd = 2, add = TRUE)
+}
+
+plot(rcp45['.pred_presence'], 
+     hook = plot_coast,
+     axes = TRUE, breaks = seq(0, 1, by = 0.1), join_zlim  = TRUE, reset = FALSE)
+```
+```{r plot_hsi_series}
+plot_coast = function(){
+  plot(coast, col = "orange", lwd = 2, add = TRUE)
+}
+
+plot(rcp45['.pred_presence'], 
+     hook = plot_coast,
+     axes = TRUE, breaks = seq(0, 1, by = 0.1), join_zlim  = TRUE, reset = FALSE)
+```
+```{r save_pred}
+# make sure the output directory exists
+path = data_path("predictions")
+if (!dir.exists(path)) ok = dir.create(path, recursive = TRUE)
+
+# write individual arrays?
+write_prediction(nowcast, file = file.path(path,"g_Jun_RCP45_2020.tif"))
+write_prediction(forecast_2055, file = file.path(path, "g_Jun_RCP45_2055.tif"))
+write_prediction(forecast_2075, file = file.path(path, "g_Jun_RCP45_2075.tif"))
+
+# or write them together in a "multi-layer" file?
+write_prediction(rcp45, file = file.path(path, "g_Jun_RCP45_all.tif"))
+```
+

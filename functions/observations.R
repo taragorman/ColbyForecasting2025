@@ -2,6 +2,10 @@
 read_observations = function(scientificname = "Thunnus thynnus",
                              minimum_year = 1970, 
                              ...){
+  dim_start = dim(obs)
+  dim_start
+  
+  obs |> count(basisOfRecord)
   
   #' Read raw OBIS data and then filter it
   #' 
@@ -13,16 +17,16 @@ read_observations = function(scientificname = "Thunnus thynnus",
   
   # Happy coding!
   
-  # read in the raw data
-  x = read_obis(scientificname, ...)
-  
-  # if the user provided a non-NULL filter by year
-  if (!is.null(minimum_year)){
-    x = x |>
-      filter(year >= minimum_year)
-  }
-  
-  return(x)
+  # # read in the raw data
+  # x = read_obis(scientificname, ...)
+  # 
+  # # if the user provided a non-NULL filter by year
+  # if (!is.null(minimum_year)){
+  #   x = x |>
+  #     filter(year >= minimum_year)
+  # }
+  # 
+  # return(x)
 }
 
 
